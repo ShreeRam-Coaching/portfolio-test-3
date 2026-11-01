@@ -1,0 +1,97 @@
+/* ===== MAXIMALIST LAYER: loads after style.css ===== */
+::selection{background:var(--lime);color:var(--graphite)}
+.prog{position:fixed;top:0;left:0;right:0;height:5px;z-index:60;background:var(--lime);transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+.off,.off *{animation-play-state:paused!important}
+
+/* nav + buttons: hard shadows */
+.lnk{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}
+.btn{border:2px solid var(--graphite);box-shadow:4px 4px 0 var(--chalk);font-weight:800;transition:transform .15s,box-shadow .15s}
+.btn:hover{background:var(--lime);border-color:var(--graphite);transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--chalk)}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--chalk)}
+.btn.ghost{background:transparent;color:var(--chalk);border:2px solid var(--chalk);box-shadow:4px 4px 0 var(--lime)}
+.btn.ghost:hover{background:var(--chalk);color:var(--graphite);border-color:var(--chalk);box-shadow:7px 7px 0 var(--lime)}
+
+/* giant outlined words behind each section */
+.hero,#problems,#solution,.band,#contact,footer{overflow:clip}
+.gw{--gc:var(--lime);position:absolute;z-index:0;pointer-events:none;white-space:nowrap;font:800 clamp(7rem,24vw,22rem)/.8 var(--fh);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--gc);opacity:.18}
+.light .gw{--gc:var(--graphite);opacity:.1}
+.g-hero{left:-1vw;bottom:-.08em}
+.g-prob{right:-1vw;top:.12em;font-size:clamp(6rem,19vw,17rem)}
+.g-sol{left:-1vw;bottom:-.08em;font-size:clamp(7rem,26vw,24rem)}
+.g-hello{right:-1vw;top:-.04em;font-size:clamp(7rem,26vw,24rem)}
+.g-num{right:clamp(.5rem,3vw,3rem);top:50%;transform:translateY(-50%);font-size:clamp(9rem,30vw,26rem)}
+
+/* hero */
+.hero::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(rgba(213,255,63,.3) 1.3px,transparent 1.5px) 0 0/26px 26px;-webkit-mask-image:linear-gradient(90deg,#000,transparent 75%);mask-image:linear-gradient(90deg,#000,transparent 75%)}
+.hero{padding-bottom:7rem}
+mark.hl{display:inline-block;background:var(--lime);color:var(--graphite);padding:0 .2em;margin-left:-.08em;transform:rotate(-1.5deg);box-shadow:5px 5px 0 var(--chalk)}
+.pill{border:2px solid var(--lime);color:var(--chalk);background:rgba(213,255,63,.1);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:.74rem}
+.pill i{animation:blink 1.3s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+.free{border:2px dashed var(--lime);rotate:-1deg}
+
+/* sticker + spinning badges */
+.badge{position:absolute;z-index:4;width:9rem;height:9rem;display:grid;place-items:center;border-radius:50%;background:var(--lime);color:var(--graphite);border:3px solid var(--graphite);box-shadow:5px 5px 0 var(--chalk)}
+.badge svg{position:absolute;inset:0;width:100%;height:100%;animation:scSpin 16s linear infinite}
+.badge text{font:800 11px var(--fb);letter-spacing:.1em;fill:currentColor}
+.badge b{font-size:2.4rem;line-height:1;transition:transform .25s}
+.badge:hover b{transform:rotate(45deg)}
+.hero .badge{right:clamp(1rem,7vw,7rem);bottom:2.5rem}
+#contact .badge{right:clamp(1rem,6vw,6rem);top:2.5rem}
+.stk{position:absolute;z-index:3;top:5rem;right:max(1rem,calc((100% - 1120px)/2 + 1rem));width:8.5rem;height:8.5rem;display:grid;place-items:center;text-align:center;border-radius:50%;background:var(--graphite);color:var(--lime);border:3px solid var(--lime);box-shadow:5px 5px 0 var(--lime);rotate:10deg;font:800 1.05rem/1.1 var(--fh);text-transform:uppercase;letter-spacing:.04em}
+
+/* ticker strips between sections */
+.strip{position:relative;z-index:6;overflow:hidden;white-space:nowrap;width:106%;margin:-1.1rem -3%;padding:.8rem 0;background:var(--lime);color:var(--graphite);border-block:3px solid var(--graphite);rotate:-2deg;font:800 clamp(1.15rem,3.2vw,2.1rem) var(--fh);letter-spacing:.04em;text-transform:uppercase}
+.strip.rv{background:var(--graphite);color:var(--lime);border-color:var(--lime);rotate:1.6deg}
+.strip.ch{background:var(--chalk);rotate:-1.4deg}
+.strip>div{display:flex;width:max-content;animation:scMarq 34s linear infinite}
+.strip.rv>div{animation-direction:reverse}
+.strip span{white-space:pre}
+
+/* problems */
+.sec h2{font-size:clamp(2.4rem,7vw,5rem);line-height:1}
+.probs{counter-reset:p;border-bottom:3px solid var(--graphite)}
+.probs li{counter-increment:p;font:800 clamp(1.1rem,2.8vw,1.8rem)/1.2 var(--fh);letter-spacing:-.02em;padding:1.25rem 1rem;border-top:3px solid var(--graphite);transition:background .2s,transform .25s}
+.probs li::before{content:counter(p,decimal-leading-zero);width:auto;height:auto;background:var(--graphite);color:var(--lime);padding:.2rem .6rem;border-radius:6px;font:800 .9rem var(--fh);letter-spacing:.06em}
+.probs li::after{content:"\2715";margin-left:auto;font-size:1.2rem;opacity:.4}
+.probs li:hover{background:var(--lime);padding-left:1rem;transform:translateX(.5rem)}
+
+/* solution steps */
+.steps{border-bottom:0;display:grid;gap:1.1rem}
+.step{grid-template-columns:5rem 1fr;align-items:center;padding:1.3rem 1.5rem;border:2px solid var(--lime);border-radius:10px;background:var(--deep);box-shadow:6px 6px 0 var(--lime);rotate:-.5deg;transition:box-shadow .25s cubic-bezier(.2,.8,.2,1),translate .25s cubic-bezier(.2,.8,.2,1)}
+.step:nth-child(2){rotate:.6deg}
+.step{transition:box-shadow .25s cubic-bezier(.2,.8,.2,1),translate .25s cubic-bezier(.2,.8,.2,1),background-color .25s}
+.step span,.step h3,.step p{transition:color .25s,text-shadow .25s}
+.step:hover{translate:-3px -3px;background:var(--lime);box-shadow:10px 10px 0 var(--chalk)}
+.step:hover span,.step:hover h3,.step:hover p{color:var(--graphite);text-shadow:none}
+.step span{font-size:clamp(2.6rem,6vw,4rem);padding-top:0;text-shadow:3px 3px 0 var(--graphite)}
+.step h3{font-size:clamp(1.5rem,3vw,2.1rem)}
+
+/* project rows */
+.band .shot{border:3px solid currentColor;border-radius:10px;box-shadow:.8rem .8rem 0 var(--lime)}
+.band .meta h3{font-size:clamp(2.4rem,5.5vw,4.4rem)}
+.band .meta small{display:inline-block;padding:.2rem .7rem;border:2px solid currentColor;border-radius:999px}
+
+/* contact */
+.contact-main h2{font-size:clamp(3rem,9vw,7rem)}
+.contacts{border-bottom:0;display:grid;gap:.9rem}
+.contacts a{padding:1.1rem 1.4rem;border:2px solid var(--lime);border-radius:10px;background:var(--deep);box-shadow:5px 5px 0 var(--lime);font-size:clamp(1.05rem,2.4vw,1.5rem);transition:transform .15s,box-shadow .15s,background .15s}
+.contacts a:hover{background:var(--lime);color:var(--graphite);transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--chalk)}
+.contacts a:hover small{color:var(--graphite)}
+
+/* footer giant name */
+footer{padding-bottom:0}
+.fbig{position:relative;z-index:2;white-space:nowrap;text-align:center;font:800 clamp(3rem,12.4vw,11.5rem)/.78 var(--fh);letter-spacing:-.06em;color:var(--lime);margin-top:2.5rem;transform:translateY(.1em);user-select:none}
+
+/* fix: card giant word outline was transparent */
+.scard{--gc:var(--graphite)}
+.scard.dk{--gc:var(--chalk)}
+.scard-bgword{-webkit-text-stroke:2px var(--gc);opacity:.16}
+
+@media(max-width:1000px){
+  .hero .badge,.stk{display:none}
+  #contact .badge{width:6.5rem;height:6.5rem;top:1.5rem}
+  .step{grid-template-columns:3.4rem 1fr;padding:1.1rem}
+  .band .shot{box-shadow:.5rem .5rem 0 var(--lime)}
+}
+@media(prefers-reduced-motion:reduce){.strip>div,.badge svg,.pill i{animation:none}}

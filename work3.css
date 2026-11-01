@@ -1,0 +1,152 @@
+/* My work: extra sticky + 3D + scroll animation layer (pairs with work3.js) */
+
+/* crisp scroll-linked motion: no CSS easing fighting the scroll */
+.scard-stage{transition:none}
+
+/* sticky progress rail: stays on screen while the project cards stack */
+.wrail{position:fixed;left:max(.5rem,env(safe-area-inset-left));top:50%;z-index:60;display:flex;flex-direction:column;align-items:center;gap:.65rem;padding:.8rem .4rem;border:2px solid var(--lime);border-radius:999px;background:var(--graphite);color:var(--lime);font:800 .7rem var(--fh);letter-spacing:.08em;opacity:0;transform:translate(-160%,-50%);transition:opacity .3s,transform .5s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.wrail.on{opacity:1;transform:translate(0,-50%)}
+.wrail .n{display:block;min-width:1.4em;text-align:center}
+.wrail small{font:inherit;opacity:.55}
+.wrail .track{position:relative;width:3px;height:5.5rem;border-radius:2px;background:rgba(213,255,63,.25);overflow:hidden}
+.wrail .fill{position:absolute;inset:0;background:var(--lime);transform-origin:50% 0;transform:scaleY(0)}
+@media(max-width:900px){.wrail{display:none}}
+
+/* title words rise out of a mask */
+.tw{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .08em .14em 0;margin:0 -.08em -.14em 0}
+.tw>span{display:inline-block}
+
+/* depth for the stack and the rows below it */
+.stack{perspective:none}
+
+/* reverse sticky scroll: each "section" (.rs) stays put with CSS sticky while the next card swings in over it */
+.scard-mark{height:0;pointer-events:none}
+.stack .rs{position:sticky;top:var(--rs-top,0px);width:100%;min-height:100svh}
+.stack .scard{position:relative;transform-origin:0 100%}
+/* PHONE: keep every animation, just stop things landing on top of text and buttons */
+@media(max-width:760px){
+  .stack .scard{padding-bottom:5.6rem}                /* clears the bottom bar */
+  .scard-chip.c2{display:none}                          /* used to sit on the "Open website" button */
+  .scard-bgword{opacity:.3}                             /* softer, so it never fights the text */
+  #contact .badge{display:none}                         /* used to cover the free-demo box */
+}
+
+/* PHONE speed-ups */
+@media(hover:none),(pointer:coarse),(max-width:760px){
+  body::after{display:none}                              /* full-screen grain layer is heavy on phones */
+  html{scroll-behavior:smooth}                            /* menu links glide with the browser's own scrolling */
+}
+
+/* ===== Work cards in the GSAP UI reverse-sticky-scroll layout: tag row, rule, huge title, rule, details ===== */
+.stack .scard{flex-direction:column;justify-content:space-between;gap:1.2rem;border-radius:0;padding:clamp(1.1rem,3vw,2.4rem) clamp(1.1rem,4vw,3.2rem) clamp(1.4rem,3.4vw,3rem)}
+.scard-idx,.scard-count,.scard-marq,.scard-bgword{display:none}
+.rv-hr{border:0;border-top:2px solid currentColor;opacity:.85;margin:0}
+.rv-tag{display:flex;justify-content:space-between;gap:1rem;margin:0 0 .8rem;font:800 .78rem var(--fb);letter-spacing:.2em;text-transform:uppercase}
+.stack .scard-body{flex:1;width:100%;max-width:none;padding-top:0;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);grid-template-areas:"title stage" "tags stage" "copy stage";grid-template-rows:auto auto 1fr;column-gap:clamp(1rem,2.2vw,2.4rem);row-gap:1.1rem;align-items:start}
+.stack .scard-title{grid-area:title;font:700 clamp(2.8rem,6vw,7.6rem)/.86 var(--fh);letter-spacing:-.045em;text-transform:uppercase;text-shadow:none}
+.stack .scard-title .tw{display:block}
+.stack .scard-tags{grid-area:tags}
+.stack .scard-stage{grid-area:stage;align-self:center;margin:.3rem 1.7rem 1rem 0}
+.stack .scard .scard-img{max-height:74svh}
+.stack .scard-copy{grid-area:copy;align-self:end;margin-top:0;flex-direction:column;gap:.8rem}
+.rv-foot{margin-top:.4rem}
+.rv-cols{display:flex;flex-wrap:wrap;gap:1rem 3vw;margin-top:1rem}
+.rv-cols>div{flex:1;min-width:150px}
+.rv-label{margin:0 0 .3rem;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
+.rv-detail{margin:0;font-size:clamp(.85rem,1.3vw,1.05rem);opacity:.78;line-height:1.4}
+@media(max-width:760px){
+  .stack .scard{padding-bottom:5.6rem}
+  .stack .scard-body{grid-template-columns:minmax(0,1fr);grid-template-areas:"title" "stage" "tags" "copy";grid-template-rows:none;row-gap:1rem}
+  .stack .scard-title{font-size:16.5vw}
+  .stack .scard-stage{margin:.2rem .5rem .6rem 0}
+  .rv-tag{font-size:.68rem;letter-spacing:.12em}
+  .rv-tag span:last-child{display:none}
+  .rv-cols>div{min-width:130px}
+}
+
+/* ===== hero: a brand row fills the empty space at the top ===== */
+.hbrand{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:0 clamp(1.1rem,5vw,3rem) 1.4rem;padding-bottom:.9rem;border-bottom:2px solid rgba(213,255,63,.35)}
+.hb-logo{font:700 clamp(1.15rem,2.6vw,1.5rem) var(--fh);letter-spacing:-.03em;color:var(--chalk)}
+.hb-logo b{color:var(--lime)}
+.hb-note{font:800 .74rem var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
+.hero{padding-top:1.4rem}
+@media(min-width:1000px){.hero{flex-direction:column;align-items:stretch;justify-content:flex-start}.hero>.in{margin:auto 0}}
+@media(max-width:640px){.hero{padding-top:1.1rem}.hb-note{font-size:.62rem;letter-spacing:.12em}}
+
+/* bigger Work images */
+@media(min-width:761px) and (max-width:1000px){.stack .scard-title{font-size:5.4vw}}
+.band .in{max-width:min(1500px,100%)}
+.proj{grid-template-columns:8fr 4fr;gap:3rem}
+.band.rev .proj{grid-template-columns:4fr 8fr}
+@media(max-width:760px){
+  .proj,.band.rev .proj{grid-template-columns:1fr}
+  .stack .scard-stage{margin:.2rem .45rem .6rem -.15rem}
+  .scard .scard-img,.band .shot{aspect-ratio:4/3}
+  .stack .scard .scard-img{max-height:none}
+  .stack .scard-img img{object-position:12% top}
+}
+
+/* ===== reverse sticky: depth + polish ===== */
+.scard::after{display:none}
+.rv-top{position:relative}
+.rv-prog{position:absolute;left:0;right:0;bottom:-2px;height:6px;background:var(--lime);transform:scaleX(0);transform-origin:0 50%;pointer-events:none}
+.scard.lm .rv-prog{background:var(--graphite)}
+.scard.dk .rv-prog{background:var(--lime)}
+.rv-dim{position:absolute;inset:0;z-index:6;background:rgba(32,33,31,.9);opacity:0;pointer-events:none;will-change:opacity}
+/* shadow on a card that lands on top of another one (cards stop clipping it now, so it finally shows) */
+.stack .scard.over{box-shadow:0 -1.1rem 3.2rem rgba(0,0,0,.42)}
+@media(max-width:760px){.stack .scard.over{box-shadow:0 -.5rem 1.4rem rgba(0,0,0,.34)}}
+
+/* ===== smoothness + depth (pairs with stack.js) ===== */
+/* dwell: each card rests, fully pinned, for a moment before the next one comes in. Change --dwell to make the rest longer or shorter */
+.stack{--dwell:34svh}
+@media(max-width:760px){.stack{--dwell:22svh}}
+.rs-dwell{height:var(--dwell);pointer-events:none}
+
+/* the screenshot stage is a real 3D scene: chips sit in front of the screenshot and parallax when it tilts */
+.stack .scard-stage{transform-style:preserve-3d}
+.stack .scard-chip,.stack .scard-sticker,.stack .scard-spin{backface-visibility:hidden}
+
+/* give moving pieces their own layer so the big card never re-paints while they move */
+.stack .scard,.stack .scard-stage,.stack .scard-title{will-change:transform}
+.stack .scard,.stack .scard-stage{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+
+/* the screenshot is moved by the scroll engine now, so the old hover transition must not delay it */
+.stack .scard-img img{transition:none;will-change:transform}
+
+/* ===== PHONE: lighter, smoother "My work" (desktop is untouched) ===== */
+@media(max-width:760px){
+  .stack{--dwell:6svh}                                              /* shorter rest between cards, so it never feels stuck */
+  .stack .scard-title,.stack .scard-img img{will-change:auto}
+  .stack .scard,.stack .scard-stage{will-change:transform;backface-visibility:visible;-webkit-backface-visibility:visible}   /* only the things that actually move get their own layer */
+  .stack .scard-stage{transform-style:flat;transition:none}
+  .stack .scard-img img{transform:none!important}                   /* no zoom/slide on the screenshot */
+  .scard-chip,.scard-sticker,.scard-spin{animation:none!important}  /* endless bobbing and spinning repaints every frame */
+  .scard-spin,.scard-chip.c2{display:none}
+  .scard::before{display:none}                                      /* the dotted pattern is an expensive full-card repaint */
+  .stack .scard.over{box-shadow:0 -.4rem 1rem rgba(0,0,0,.28)}
+}
+
+/* ===== NO SIDEWAYS SCROLL =====
+   Something (the tilted ticker strips, the giant outlined words, the tilting cards) is wider than the screen, which left a thin
+   strip on the right of a phone that you could drag sideways, and made the whole page glitch. "clip" cuts anything wider than the
+   screen off WITHOUT turning the page into a scroll box, so the sticky cards keep working. */
+html,body{overflow-x:clip;max-width:100%;overscroll-behavior-x:none}
+body{position:relative;width:100%}
+main{overflow-x:clip}
+@media(max-width:1000px){
+  html,body{touch-action:pan-y pinch-zoom}                        /* up/down scrolling and pinch zoom only, never sideways */
+}
+
+/* ===== PHONE: each card fits exactly on one screen, so it pins with its TITLE at the top =====
+   Before, the card was taller than the screen, so it only pinned once its bottom edge arrived, which pushed the title off the top
+   and left the image there. Now the title is at the top when it pins, and the next card's animation starts right after. */
+@media(max-width:760px){
+  .stack .scard{min-height:100svh;padding-top:.9rem;padding-bottom:5.2rem}
+  .stack .scard .rv-foot{display:none}                                /* the Type / Focus / Live demo row would not fit on one phone screen */
+  .stack .scard-body{row-gap:.7rem}
+  .stack .scard-title{font-size:min(14vw,7.2svh)}
+  .stack .scard .scard-img{aspect-ratio:16/10;max-height:31svh}
+  .stack .scard-img img{object-position:50% 0}
+  .scard-text p{font-size:.95rem}
+}
